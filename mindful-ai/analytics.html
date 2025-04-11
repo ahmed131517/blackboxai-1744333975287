@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics - MindfulAI</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Vue.js -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div id="app" class="min-h-screen">
+        <!-- Sidebar -->
+        <nav class="fixed top-0 left-0 h-full w-64 bg-white shadow-lg transform transition-transform duration-200 ease-in-out md:translate-x-0" 
+             :class="{'translate-x-0': sidebarOpen, '-translate-x-full': !sidebarOpen && !$screen.md}">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-8">
+                    <h1 class="text-2xl font-bold text-indigo-600">MindfulAI</h1>
+                    <button @click="toggleSidebar" class="md:hidden text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="space-y-4">
+                    <a href="index.html" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-100">
+                        <i class="fas fa-home mr-2"></i>Home
+                    </a>
+                    <a href="chat.html" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-100">
+                        <i class="fas fa-comments mr-2"></i>Chat
+                    </a>
+                    <a href="analytics.html" class="block py-2.5 px-4 rounded transition duration-200 bg-indigo-50 text-indigo-600">
+                        <i class="fas fa-chart-line mr-2"></i>Analytics
+                    </a>
+                    <a href="treatment.html" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-100">
+                        <i class="fas fa-clipboard-list mr-2"></i>Treatment
+                    </a>
+                    <a href="resources.html" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-100">
+                        <i class="fas fa-book-medical mr-2"></i>Resources
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="md:ml-64">
+            <!-- Mobile Header -->
+            <header class="md:hidden bg-white shadow-sm p-4">
+                <button @click="toggleSidebar" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </header>
+
+            <!-- Analytics Dashboard -->
+            <div class="p-6">
+                <div class="mb-8">
+                    <h2 class="text-2xl font-bold mb-2">Psychological Analytics</h2>
+                    <p class="text-gray-600">Track your emotional patterns and cognitive insights over time</p>
+                </div>
+
+                <!-- Analytics Grid -->
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Emotional Pattern Chart -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-lg font-semibold mb-4">Emotional Patterns</h3>
+                        <div class="relative h-64">
+                            <canvas ref="emotionChart" class="w-full h-full"></canvas>
+                        </div>
+                        <div class="flex justify-between text-sm text-gray-600 mt-4">
+                            <span>Past Week</span>
+                            <span>Today</span>
+                        </div>
+                    </div>
+
+                    <!-- Cognitive Distortions -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-lg font-semibold mb-4">Cognitive Patterns</h3>
+                        <div class="space-y-4">
+                            <div v-for="pattern in cognitivePatterns" :key="pattern.id" 
+                                 class="p-4 rounded-lg" :class="pattern.bgColor">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="font-medium" :class="pattern.textColor">{{ pattern.name }}</h4>
+                                    <span class="text-sm" :class="pattern.textColor">{{ pattern.frequency }}%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="h-2 rounded-full transition-all duration-500" 
+                                         :class="pattern.barColor"
+                                         :style="{ width: pattern.frequency + '%' }"></div>
+                                </div>
+                                <p class="mt-2 text-sm" :class="pattern.textColor">{{ pattern.description }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Weekly Mood Calendar -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-lg font-semibold mb-4">Weekly Mood Tracker</h3>
+                        <div class="grid grid-cols-7 gap-2">
+                            <div v-for="day in moodCalendar" :key="day.date" 
+                                 class="aspect-square rounded-lg p-2 flex flex-col items-center justify-center cursor-pointer hover:opacity-80"
+                                 :class="day.bgColor">
+                                <span class="text-xs text-gray-600">{{ day.dayName }}</span>
+                                <i :class="day.icon + ' text-xl ' + day.textColor"></i>
+                                <span class="text-xs mt-1" :class="day.textColor">{{ day.mood }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Emotional Triggers -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-lg font-semibold mb-4">Common Triggers</h3>
+                        <div class="space-y-3">
+                            <div v-for="trigger in emotionalTriggers" :key="trigger.id"
+                                 class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50">
+                                <div class="w-10 h-10 rounded-full flex items-center justify-center"
+                                     :class="trigger.iconBg">
+                                    <i :class="trigger.icon + ' ' + trigger.iconColor"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="font-medium">{{ trigger.name }}</h4>
+                                    <p class="text-sm text-gray-600">{{ trigger.frequency }} occurrences this week</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main JavaScript -->
+    <script>
+        const { createApp } = Vue
+
+        createApp({
+            data() {
+                return {
+                    sidebarOpen: false,
+                    cognitivePatterns: [
+                        {
+                            id: 1,
+                            name: 'All-or-Nothing Thinking',
+                            frequency: 75,
+                            description: 'Tendency to see things in black-and-white categories',
+                            bgColor: 'bg-indigo-50',
+                            textColor: 'text-indigo-700',
+                            barColor: 'bg-indigo-600'
+                        },
+                        {
+                            id: 2,
+                            name: 'Overgeneralization',
+                            frequency: 45,
+                            description: 'Drawing broad conclusions from single events',
+                            bgColor: 'bg-purple-50',
+                            textColor: 'text-purple-700',
+                            barColor: 'bg-purple-600'
+                        },
+                        {
+                            id: 3,
+                            name: 'Mental Filter',
+                            frequency: 30,
+                            description: 'Focusing on negatives while filtering out positives',
+                            bgColor: 'bg-blue-50',
+                            textColor: 'text-blue-700',
+                            barColor: 'bg-blue-600'
+                        }
+                    ],
+                    moodCalendar: [
+                        {
+                            date: '2024-01-01',
+                            dayName: 'Mon',
+                            mood: 'Happy',
+                            icon: 'fas fa-smile',
+                            bgColor: 'bg-green-50',
+                            textColor: 'text-green-600'
+                        },
+                        {
+                            date: '2024-01-02',
+                            dayName: 'Tue',
+                            mood: 'Neutral',
+                            icon: 'fas fa-meh',
+                            bgColor: 'bg-gray-50',
+                            textColor: 'text-gray-600'
+                        },
+                        {
+                            date: '2024-01-03',
+                            dayName: 'Wed',
+                            mood: 'Anxious',
+                            icon: 'fas fa-frown',
+                            bgColor: 'bg-yellow-50',
+                            textColor: 'text-yellow-600'
+                        },
+                        {
+                            date: '2024-01-04',
+                            dayName: 'Thu',
+                            mood: 'Happy',
+                            icon: 'fas fa-smile',
+                            bgColor: 'bg-green-50',
+                            textColor: 'text-green-600'
+                        },
+                        {
+                            date: '2024-01-05',
+                            dayName: 'Fri',
+                            mood: 'Sad',
+                            icon: 'fas fa-sad-tear',
+                            bgColor: 'bg-blue-50',
+                            textColor: 'text-blue-600'
+                        },
+                        {
+                            date: '2024-01-06',
+                            dayName: 'Sat',
+                            mood: 'Happy',
+                            icon: 'fas fa-smile',
+                            bgColor: 'bg-green-50',
+                            textColor: 'text-green-600'
+                        },
+                        {
+                            date: '2024-01-07',
+                            dayName: 'Sun',
+                            mood: 'Excited',
+                            icon: 'fas fa-grin-stars',
+                            bgColor: 'bg-purple-50',
+                            textColor: 'text-purple-600'
+                        }
+                    ],
+                    emotionalTriggers: [
+                        {
+                            id: 1,
+                            name: 'Work Stress',
+                            frequency: 8,
+                            icon: 'fas fa-briefcase',
+                            iconBg: 'bg-red-100',
+                            iconColor: 'text-red-600'
+                        },
+                        {
+                            id: 2,
+                            name: 'Social Interactions',
+                            frequency: 5,
+                            icon: 'fas fa-users',
+                            iconBg: 'bg-blue-100',
+                            iconColor: 'text-blue-600'
+                        },
+                        {
+                            id: 3,
+                            name: 'Sleep Pattern',
+                            frequency: 3,
+                            icon: 'fas fa-moon',
+                            iconBg: 'bg-indigo-100',
+                            iconColor: 'text-indigo-600'
+                        }
+                    ]
+                }
+            },
+            methods: {
+                toggleSidebar() {
+                    this.sidebarOpen = !this.sidebarOpen
+                },
+                initEmotionChart() {
+                    const ctx = this.$refs.emotionChart.getContext('2d')
+                    const gradient = ctx.createLinearGradient(0, 0, 0, 400)
+                    gradient.addColorStop(0, 'rgba(79, 70, 229, 0.4)')
+                    gradient.addColorStop(1, 'rgba(79, 70, 229, 0.0)')
+                    
+                    new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                            datasets: [{
+                                label: 'Emotional State',
+                                data: [65, 45, 30, 70, 50, 75, 85],
+                                borderColor: '#4F46E5',
+                                backgroundColor: gradient,
+                                tension: 0.4,
+                                fill: true
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    display: false
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    max: 100,
+                                    grid: {
+                                        display: true,
+                                        color: '#E5E7EB'
+                                    }
+                                },
+                                x: {
+                                    grid: {
+                                        display: false
+                                    }
+                                }
+                            }
+                        }
+                    })
+                }
+            },
+            mounted() {
+                // Load Chart.js dynamically
+                const script = document.createElement('script')
+                script.src = 'https://cdn.jsdelivr.net/npm/chart.js'
+                script.onload = () => {
+                    this.initEmotionChart()
+                }
+                document.head.appendChild(script)
+            }
+        }).mount('#app')
+    </script>
+</body>
+</html>
