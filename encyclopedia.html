@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Encyclopedia - Physician's Assistant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="w-64 bg-[#1e2a3a] text-white p-4">
+            <div class="mb-8">
+                <img src="https://websim.ai/logo.svg" alt="WebSim" class="h-8">
+            </div>
+            
+            <!-- Navigation Menu -->
+            <nav class="space-y-2">
+                <a href="index.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-[#34495e] transition-colors">
+                    <i class="fas fa-th-large"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="patient.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-[#34495e] transition-colors">
+                    <i class="fas fa-user-plus"></i>
+                    <span>New Patient</span>
+                </a>
+                <a href="symptoms.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-[#34495e] transition-colors">
+                    <i class="fas fa-notes-medical"></i>
+                    <span>Symptom Analysis</span>
+                </a>
+                <a href="#" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-[#34495e] transition-colors">
+                    <i class="fas fa-stethoscope"></i>
+                    <span>Physical Examination</span>
+                </a>
+                <a href="lab.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-[#34495e] transition-colors">
+                    <i class="fas fa-flask"></i>
+                    <span>Lab Request</span>
+                </a>
+                <a href="prescription.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-[#34495e] transition-colors">
+                    <i class="fas fa-prescription"></i>
+                    <span>Create Prescription</span>
+                </a>
+                <a href="drugs.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-[#34495e] transition-colors">
+                    <i class="fas fa-pills"></i>
+                    <span>Drug Interactions</span>
+                </a>
+                <a href="encyclopedia.html" class="flex items-center space-x-3 p-3 rounded-lg bg-[#2c3e50] hover:bg-[#34495e] transition-colors">
+                    <i class="fas fa-book-medical"></i>
+                    <span>Encyclopedia</span>
+                </a>
+                <a href="#" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-[#34495e] transition-colors">
+                    <i class="fas fa-folder-open"></i>
+                    <span>Medical Records</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 p-8 overflow-auto">
+            <h1 class="text-3xl font-bold text-[#1e2a3a] mb-8">Medical Encyclopedia</h1>
+
+            <!-- Search Section -->
+            <div class="bg-white rounded-xl p-6 shadow-sm mb-6">
+                <div class="flex gap-4">
+                    <div class="flex-1">
+                        <input type="text" placeholder="Search medical conditions, treatments, or procedures..." 
+                               class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <button class="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
+                        <i class="fas fa-search mr-2"></i>Search
+                    </button>
+                </div>
+            </div>
+
+            <!-- Categories Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                <!-- Common Conditions -->
+                <div class="bg-white rounded-xl p-6 shadow-sm">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-heartbeat text-red-500 text-2xl mr-3"></i>
+                        <h2 class="text-xl font-semibold text-[#1e2a3a]">Common Conditions</h2>
+                    </div>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-blue-600 hover:text-blue-800">Hypertension</a></li>
+                        <li><a href="#" class="text-blue-600 hover:text-blue-800">Diabetes Mellitus</a></li>
+                        <li><a href="#" class="text-blue-600 hover:text-blue-800">Asthma</a></li>
+                        <li><a href="#" class="text-blue-600 hover:text-blue-800">Arthritis</a></li>
+                        <li><a href="#" class="text-blue-600 hover:text-blue-800">View All...</a></li>
+                    </ul>
+                </div>
+
+                <!-- Treatments & Procedures -->
+                <div class="bg-white rounded-xl p-6 shadow-sm">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-procedures text-green-500 text-2xl mr-3"></i>
+                        <h2 class="text-xl font-semibold text-[#1e2a3a]">Treatments & Procedures</h2>
+                    </div>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-blue-600 hover:text-blue-800">Physical Therapy</a></li>
+                        <li><a href="#" class="text-blue-600 hover:text-blue-800">Chemotherapy</a></li>
+                        <li><a href="#" class="text-blue-600 hover:text-blue-800">Surgery</a></li>
+                        <li><a href="#" class="text-blue-600 hover:text-blue-800">Radiation Therapy</a></li>
+                        <li><a href="#" class="text-blue-600 hover:text-blue-800">View All...</a></li>
+                    </ul>
+                </div>
+
+                <!-- Medications -->
+                <div class="bg-white rounded-xl p-6 shadow-sm">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-capsules text-purple-500 text-2xl mr-3"></i>
+                        <h2 class="text-xl font-semibold text-[#1e2a3a]">Medications</h2>
+                    </div>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-blue-600 hover:text-blue-800">Antibiotics</a></li>
+                        <li><a href="#" class="text-blue-600 hover:text-blue-800">Pain Medications</a></li>
+                        <li><a href="#" class="text-blue-600 hover:text-blue-800">Blood Pressure Medications</a></li>
+                        <li><a href="#" class="text-blue-600 hover:text-blue-800">Diabetes Medications</a></li>
+                        <li><a href="#" class="text-blue-600 hover:text-blue-800">View All...</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Featured Articles -->
+            <div class="bg-white rounded-xl p-6 shadow-sm">
+                <h2 class="text-xl font-semibold text-[#1e2a3a] mb-4">Featured Articles</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Article 1 -->
+                    <div class="border rounded-lg p-4">
+                        <h3 class="font-semibold text-lg mb-2">Understanding Blood Pressure Readings</h3>
+                        <p class="text-gray-600 mb-3">Learn how to interpret blood pressure measurements and understand what the numbers mean for your health.</p>
+                        <a href="#" class="text-blue-500 hover:text-blue-700">Read More →</a>
+                    </div>
+
+                    <!-- Article 2 -->
+                    <div class="border rounded-lg p-4">
+                        <h3 class="font-semibold text-lg mb-2">Managing Diabetes: A Comprehensive Guide</h3>
+                        <p class="text-gray-600 mb-3">Essential information about diabetes management, including diet, exercise, and medication guidelines.</p>
+                        <a href="#" class="text-blue-500 hover:text-blue-700">Read More →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
