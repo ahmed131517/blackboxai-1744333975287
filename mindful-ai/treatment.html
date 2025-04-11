@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treatment Plan - MindfulAI</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Vue.js -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+        }
+        .timeline-connector {
+            position: absolute;
+            left: 35px;
+            top: 40px;
+            bottom: 0;
+            width: 2px;
+            background-color: #E5E7EB;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div id="app" class="min-h-screen">
+        <!-- Sidebar -->
+        <nav class="fixed top-0 left-0 h-full w-64 bg-white shadow-lg transform transition-transform duration-200 ease-in-out md:translate-x-0" 
+             :class="{'translate-x-0': sidebarOpen, '-translate-x-full': !sidebarOpen && !$screen.md}">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-8">
+                    <h1 class="text-2xl font-bold text-indigo-600">MindfulAI</h1>
+                    <button @click="toggleSidebar" class="md:hidden text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="space-y-4">
+                    <a href="index.html" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-100">
+                        <i class="fas fa-home mr-2"></i>Home
+                    </a>
+                    <a href="chat.html" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-100">
+                        <i class="fas fa-comments mr-2"></i>Chat
+                    </a>
+                    <a href="analytics.html" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-100">
+                        <i class="fas fa-chart-line mr-2"></i>Analytics
+                    </a>
+                    <a href="treatment.html" class="block py-2.5 px-4 rounded transition duration-200 bg-indigo-50 text-indigo-600">
+                        <i class="fas fa-clipboard-list mr-2"></i>Treatment
+                    </a>
+                    <a href="resources.html" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-100">
+                        <i class="fas fa-book-medical mr-2"></i>Resources
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="md:ml-64">
+            <!-- Mobile Header -->
+            <header class="md:hidden bg-white shadow-sm p-4">
+                <button @click="toggleSidebar" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </header>
+
+            <!-- Treatment Plan Dashboard -->
+            <div class="p-6">
+                <div class="mb-8">
+                    <h2 class="text-2xl font-bold mb-2">Your Treatment Plan</h2>
+                    <p class="text-gray-600">Personalized recommendations and progress tracking</p>
+                </div>
+
+                <!-- Treatment Overview -->
+                <div class="grid md:grid-cols-3 gap-6 mb-8">
+                    <!-- Progress Card -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold">Overall Progress</h3>
+                            <span class="text-2xl font-bold text-indigo-600">75%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                            <div class="bg-indigo-600 h-2.5 rounded-full" style="width: 75%"></div>
+                        </div>
+                        <p class="mt-4 text-sm text-gray-600">Keep going! You're making great progress.</p>
+                    </div>
+
+                    <!-- Current Phase -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-lg font-semibold mb-4">Current Phase</h3>
+                        <div class="flex items-center text-indigo-600 mb-2">
+                            <i class="fas fa-star mr-2"></i>
+                            <span class="font-medium">Cognitive Restructuring</span>
+                        </div>
+                        <p class="text-sm text-gray-600">Learning to identify and challenge negative thought patterns</p>
+                    </div>
+
+                    <!-- Next Session -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-lg font-semibold mb-4">Next Check-in</h3>
+                        <div class="flex items-center text-indigo-600 mb-2">
+                            <i class="fas fa-calendar mr-2"></i>
+                            <span class="font-medium">Tomorrow, 10:00 AM</span>
+                        </div>
+                        <p class="text-sm text-gray-600">Scheduled review of your progress and adjustments</p>
+                    </div>
+                </div>
+
+                <!-- Treatment Timeline -->
+                <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+                    <h3 class="text-lg font-semibold mb-6">Treatment Timeline</h3>
+                    <div class="relative">
+                        <div class="timeline-connector"></div>
+                        <div class="space-y-8">
+                            <div v-for="phase in treatmentPhases" :key="phase.id" class="relative pl-12">
+                                <div class="absolute left-0 w-8 h-8 rounded-full flex items-center justify-center"
+                                     :class="phase.status === 'completed' ? 'bg-green-100 text-green-600' :
+                                            phase.status === 'current' ? 'bg-indigo-100 text-indigo-600' :
+                                            'bg-gray-100 text-gray-600'">
+                                    <i :class="phase.icon"></i>
+                                </div>
+                                <div class="bg-gray-50 rounded-lg p-4">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <h4 class="font-medium">{{ phase.name }}</h4>
+                                        <span class="text-sm" :class="phase.status === 'completed' ? 'text-green-600' :
+                                                                     phase.status === 'current' ? 'text-indigo-600' :
+                                                                     'text-gray-600'">
+                                            {{ phase.duration }}
+                                        </span>
+                                    </div>
+                                    <p class="text-sm text-gray-600 mb-3">{{ phase.description }}</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span v-for="technique in phase.techniques" 
+                                              class="px-2 py-1 text-xs rounded-full bg-white border border-gray-200">
+                                            {{ technique }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Current Techniques -->
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Daily Practices -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-lg font-semibold mb-4">Daily Practices</h3>
+                        <div class="space-y-4">
+                            <div v-for="practice in dailyPractices" :key="practice.id"
+                                 class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50">
+                                <div class="w-10 h-10 rounded-full flex items-center justify-center"
+                                     :class="practice.completed ? 'bg-green-100' : 'bg-gray-100'">
+                                    <i :class="practice.icon + (practice.completed ? ' text-green-600' : ' text-gray-600')"></i>
+                                </div>
+                                <div class="ml-4 flex-1">
+                                    <h4 class="font-medium">{{ practice.name }}</h4>
+                                    <p class="text-sm text-gray-600">{{ practice.description }}</p>
+                                </div>
+                                <button class="px-3 py-1 rounded-full text-sm"
+                                        :class="practice.completed ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-600'"
+                                        @click="togglePractice(practice)">
+                                    {{ practice.completed ? 'Completed' : 'Mark Done' }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Resources & Tools -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-lg font-semibold mb-4">Resources & Tools</h3>
+                        <div class="space-y-4">
+                            <div v-for="resource in resources" :key="resource.id"
+                                 class="p-4 rounded-lg border border-gray-200 hover:bg-gray-50">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="font-medium">{{ resource.name }}</h4>
+                                    <span class="text-sm text-gray-600">{{ resource.type }}</span>
+                                </div>
+                                <p class="text-sm text-gray-600 mb-3">{{ resource.description }}</p>
+                                <a :href="resource.link" 
+                                   class="inline-flex items-center text-indigo-600 hover:text-indigo-700">
+                                    <span>Access Resource</span>
+                                    <i class="fas fa-arrow-right ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main JavaScript -->
+    <script>
+        const { createApp } = Vue
+
+        createApp({
+            data() {
+                return {
+                    sidebarOpen: false,
+                    treatmentPhases: [
+                        {
+                            id: 1,
+                            name: 'Initial Assessment',
+                            status: 'completed',
+                            duration: 'Week 1',
+                            icon: 'fas fa-clipboard-check',
+                            description: 'Comprehensive evaluation of current mental state and challenges',
+                            techniques: ['Mood Tracking', 'Behavioral Analysis', 'Goal Setting']
+                        },
+                        {
+                            id: 2,
+                            name: 'Cognitive Restructuring',
+                            status: 'current',
+                            duration: 'Week 2-3',
+                            icon: 'fas fa-brain',
+                            description: 'Learning to identify and challenge negative thought patterns',
+                            techniques: ['Thought Records', 'Evidence Examination', 'Alternative Perspectives']
+                        },
+                        {
+                            id: 3,
+                            name: 'Behavioral Activation',
+                            status: 'upcoming',
+                            duration: 'Week 4-5',
+                            icon: 'fas fa-walking',
+                            description: 'Engaging in positive activities and building healthy routines',
+                            techniques: ['Activity Scheduling', 'Pleasure Rating', 'Progress Tracking']
+                        }
+                    ],
+                    dailyPractices: [
+                        {
+                            id: 1,
+                            name: 'Morning Meditation',
+                            description: '10-minute mindfulness practice',
+                            icon: 'fas fa-om',
+                            completed: true
+                        },
+                        {
+                            id: 2,
+                            name: 'Thought Journal',
+                            description: 'Record and analyze negative thoughts',
+                            icon: 'fas fa-book',
+                            completed: false
+                        },
+                        {
+                            id: 3,
+                            name: 'Evening Reflection',
+                            description: 'Review daily achievements and challenges',
+                            icon: 'fas fa-moon',
+                            completed: false
+                        }
+                    ],
+                    resources: [
+                        {
+                            id: 1,
+                            name: 'Cognitive Restructuring Guide',
+                            type: 'PDF Guide',
+                            description: 'Step-by-step guide for challenging negative thoughts',
+                            link: '#'
+                        },
+                        {
+                            id: 2,
+                            name: 'Relaxation Techniques',
+                            type: 'Audio',
+                            description: 'Guided meditation and breathing exercises',
+                            link: '#'
+                        },
+                        {
+                            id: 3,
+                            name: 'Progress Tracker',
+                            type: 'Interactive Tool',
+                            description: 'Monitor your improvement over time',
+                            link: '#'
+                        }
+                    ]
+                }
+            },
+            methods: {
+                toggleSidebar() {
+                    this.sidebarOpen = !this.sidebarOpen
+                },
+                togglePractice(practice) {
+                    practice.completed = !practice.completed
+                }
+            }
+        }).mount('#app')
+    </script>
+</body>
+</html>
