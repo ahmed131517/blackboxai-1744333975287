@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physician's Assistant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="w-64 bg-[#1e2a3a] text-white p-4">
+            <div class="mb-8">
+                <img src="https://websim.ai/logo.svg" alt="WebSim" class="h-8">
+            </div>
+            
+            <!-- Navigation Menu -->
+            <nav class="space-y-2">
+                <a href="#" class="flex items-center space-x-3 p-3 rounded-lg bg-[#2c3e50] hover:bg-[#34495e] transition-colors">
+                    <i class="fas fa-th-large"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="patient.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-[#34495e] transition-colors">
+                    <i class="fas fa-user-plus"></i>
+                    <span>New Patient</span>
+                </a>
+                <a href="symptoms.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-[#34495e] transition-colors">
+                    <i class="fas fa-notes-medical"></i>
+                    <span>Symptom Analysis</span>
+                </a>
+                <a href="examination.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-[#34495e] transition-colors">
+                    <i class="fas fa-stethoscope"></i>
+                    <span>Physical Examination</span>
+                </a>
+                <a href="lab.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-[#34495e] transition-colors">
+                    <i class="fas fa-flask"></i>
+                    <span>Lab Request</span>
+                </a>
+                <a href="prescription.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-[#34495e] transition-colors">
+                    <i class="fas fa-prescription"></i>
+                    <span>Create Prescription</span>
+                </a>
+                <a href="drugs.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-[#34495e] transition-colors">
+                    <i class="fas fa-pills"></i>
+                    <span>Drug Interactions</span>
+                </a>
+                <a href="encyclopedia.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-[#34495e] transition-colors">
+                    <i class="fas fa-book-medical"></i>
+                    <span>Encyclopedia</span>
+                </a>
+                <a href="records.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-[#34495e] transition-colors">
+                    <i class="fas fa-folder-open"></i>
+                    <span>Medical Records</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 p-8 overflow-auto">
+            <h1 class="text-3xl font-bold text-[#1e2a3a] mb-8">Physician's Assistant</h1>
+
+            <!-- Statistics Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <!-- Recent Patients Card -->
+                <div class="bg-white rounded-xl p-6 shadow-sm">
+                    <h2 class="text-xl font-semibold text-[#1e2a3a] mb-4">Recent Patients</h2>
+                    <div class="text-4xl font-bold text-[#3498db] mb-2">0 total patients</div>
+                    <p class="text-gray-500">No patients yet</p>
+                </div>
+
+                <!-- Symptom Analysis Card -->
+                <div class="bg-white rounded-xl p-6 shadow-sm">
+                    <h2 class="text-xl font-semibold text-[#1e2a3a] mb-4">Symptom Analysis</h2>
+                    <div class="text-4xl font-bold text-[#3498db] mb-2">0 analyses</div>
+                    <p class="text-gray-500">Latest: Invalid Date</p>
+                </div>
+
+                <!-- Prescriptions Card -->
+                <div class="bg-white rounded-xl p-6 shadow-sm">
+                    <h2 class="text-xl font-semibold text-[#1e2a3a] mb-4">Prescriptions</h2>
+                    <div class="text-4xl font-bold text-[#3498db] mb-2">0 written</div>
+                    <p class="text-gray-500">Latest: Invalid Date</p>
+                </div>
+
+                <!-- Lab Requests Card -->
+                <div class="bg-white rounded-xl p-6 shadow-sm">
+                    <h2 class="text-xl font-semibold text-[#1e2a3a] mb-4">Lab Requests</h2>
+                    <div class="text-4xl font-bold text-[#3498db] mb-2">0 requests</div>
+                    <p class="text-gray-500">Latest: Invalid Date</p>
+                </div>
+            </div>
+
+            <!-- Recent Activities Section -->
+            <div class="bg-white rounded-xl p-6 shadow-sm">
+                <h2 class="text-xl font-semibold text-[#1e2a3a] mb-4">Recent Activities</h2>
+                <p class="text-gray-500">No recent activities</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
