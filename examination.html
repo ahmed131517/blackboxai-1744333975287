@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physical Examination - Physician's Assistant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="w-64 bg-[#1e2a3a] text-white p-4">
+            <div class="mb-8">
+                <img src="https://websim.ai/logo.svg" alt="WebSim" class="h-8">
+            </div>
+            
+            <!-- Navigation Menu -->
+            <nav class="space-y-2">
+                <a href="index.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-[#34495e] transition-colors">
+                    <i class="fas fa-th-large"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="patient.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-[#34495e] transition-colors">
+                    <i class="fas fa-user-plus"></i>
+                    <span>New Patient</span>
+                </a>
+                <a href="symptoms.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-[#34495e] transition-colors">
+                    <i class="fas fa-notes-medical"></i>
+                    <span>Symptom Analysis</span>
+                </a>
+                <a href="examination.html" class="flex items-center space-x-3 p-3 rounded-lg bg-[#2c3e50] hover:bg-[#34495e] transition-colors">
+                    <i class="fas fa-stethoscope"></i>
+                    <span>Physical Examination</span>
+                </a>
+                <a href="lab.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-[#34495e] transition-colors">
+                    <i class="fas fa-flask"></i>
+                    <span>Lab Request</span>
+                </a>
+                <a href="prescription.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-[#34495e] transition-colors">
+                    <i class="fas fa-prescription"></i>
+                    <span>Create Prescription</span>
+                </a>
+                <a href="drugs.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-[#34495e] transition-colors">
+                    <i class="fas fa-pills"></i>
+                    <span>Drug Interactions</span>
+                </a>
+                <a href="encyclopedia.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-[#34495e] transition-colors">
+                    <i class="fas fa-book-medical"></i>
+                    <span>Encyclopedia</span>
+                </a>
+                <a href="records.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-[#34495e] transition-colors">
+                    <i class="fas fa-folder-open"></i>
+                    <span>Medical Records</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 p-8 overflow-auto">
+            <h1 class="text-3xl font-bold text-[#1e2a3a] mb-8">Physical Examination</h1>
+
+            <!-- Patient Selection -->
+            <div class="bg-white rounded-xl p-6 shadow-sm mb-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Select Patient</label>
+                        <select class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            <option value="">Choose a patient</option>
+                            <option value="1">John Doe</option>
+                            <option value="2">Jane Smith</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Examination Date</label>
+                        <input type="date" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Examination Type</label>
+                        <select class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            <option value="">Select type</option>
+                            <option value="routine">Routine Check-up</option>
+                            <option value="followup">Follow-up Visit</option>
+                            <option value="emergency">Emergency Visit</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Examination Form -->
+            <div class="bg-white rounded-xl p-6 shadow-sm">
+                <form class="space-y-6">
+                    <!-- Vital Signs -->
+                    <div class="space-y-4">
+                        <h2 class="text-xl font-semibold text-[#1e2a3a]">Vital Signs</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Blood Pressure</label>
+                                <input type="text" placeholder="120/80" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Heart Rate</label>
+                                <input type="text" placeholder="BPM" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Temperature</label>
+                                <input type="text" placeholder="°C" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Respiratory Rate</label>
+                                <input type="text" placeholder="breaths/min" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Physical Assessment -->
+                    <div class="space-y-4">
+                        <h2 class="text-xl font-semibold text-[#1e2a3a]">Physical Assessment</h2>
+                        
+                        <!-- General Appearance -->
+                        <div class="p-4 border rounded-lg">
+                            <h3 class="font-semibold mb-3">General Appearance</h3>
+                            <textarea class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" rows="2"></textarea>
+                        </div>
+
+                        <!-- Systems Examination -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Cardiovascular -->
+                            <div class="p-4 border rounded-lg">
+                                <h3 class="font-semibold mb-3">Cardiovascular System</h3>
+                                <div class="space-y-2">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Heart Sounds</label>
+                                        <textarea class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" rows="2"></textarea>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Peripheral Pulses</label>
+                                        <textarea class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" rows="2"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Respiratory -->
+                            <div class="p-4 border rounded-lg">
+                                <h3 class="font-semibold mb-3">Respiratory System</h3>
+                                <div class="space-y-2">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Breath Sounds</label>
+                                        <textarea class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" rows="2"></textarea>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Chest Movement</label>
+                                        <textarea class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" rows="2"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Gastrointestinal -->
+                            <div class="p-4 border rounded-lg">
+                                <h3 class="font-semibold mb-3">Gastrointestinal System</h3>
+                                <div class="space-y-2">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Abdomen</label>
+                                        <textarea class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" rows="2"></textarea>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Bowel Sounds</label>
+                                        <textarea class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" rows="2"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Musculoskeletal -->
+                            <div class="p-4 border rounded-lg">
+                                <h3 class="font-semibold mb-3">Musculoskeletal System</h3>
+                                <div class="space-y-2">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Range of Motion</label>
+                                        <textarea class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" rows="2"></textarea>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Muscle Strength</label>
+                                        <textarea class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" rows="2"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Assessment and Plan -->
+                    <div class="space-y-4">
+                        <h2 class="text-xl font-semibold text-[#1e2a3a]">Assessment and Plan</h2>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Clinical Assessment</label>
+                                <textarea class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" rows="3"></textarea>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Treatment Plan</label>
+                                <textarea class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex justify-end space-x-4">
+                        <button type="button" class="px-6 py-3 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors">
+                            Save Draft
+                        </button>
+                        <button type="submit" class="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
+                            Complete Examination
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
