@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindfulAI - AI-Powered Psychological Support</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Vue.js -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        /* Custom Styles */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div id="app" class="min-h-screen">
+        <!-- Sidebar -->
+        <nav class="fixed top-0 left-0 h-full w-64 bg-white shadow-lg transform transition-transform duration-200 ease-in-out md:translate-x-0" 
+             :class="{'translate-x-0': sidebarOpen, '-translate-x-full': !sidebarOpen}">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-8">
+                    <h1 class="text-2xl font-bold text-indigo-600">MindfulAI</h1>
+                    <button @click="toggleSidebar" class="md:hidden text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="space-y-4">
+                    <a href="index.html" class="block py-2.5 px-4 rounded transition duration-200 bg-indigo-50 text-indigo-600">
+                        <i class="fas fa-home mr-2"></i>Home
+                    </a>
+                    <a href="chat.html" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-100">
+                        <i class="fas fa-comments mr-2"></i>Chat
+                    </a>
+                    <a href="analytics.html" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-100">
+                        <i class="fas fa-chart-line mr-2"></i>Analytics
+                    </a>
+                    <a href="treatment.html" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-100">
+                        <i class="fas fa-clipboard-list mr-2"></i>Treatment
+                    </a>
+                    <a href="resources.html" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-100">
+                        <i class="fas fa-book-medical mr-2"></i>Resources
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="md:ml-64">
+            <!-- Mobile Header -->
+            <header class="md:hidden bg-white shadow-sm p-4">
+                <button @click="toggleSidebar" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </header>
+
+            <!-- Hero Section -->
+            <div class="relative h-screen bg-gradient-to-br from-indigo-500 to-purple-600">
+                <div class="absolute inset-0 bg-black opacity-50"></div>
+                <div class="relative z-10 container mx-auto px-6 py-32 text-center text-white">
+                    <h1 class="text-5xl font-bold mb-6">Welcome to MindfulAI</h1>
+                    <p class="text-xl mb-12 max-w-2xl mx-auto">
+                        Your AI-powered companion for psychological support, offering personalized conversations, 
+                        analysis, and treatment plans in a safe and confidential environment.
+                    </p>
+                    <div class="space-x-4">
+                        <a href="chat.html" 
+                           class="inline-block px-8 py-4 bg-white text-indigo-600 rounded-lg font-semibold hover:bg-gray-100 transition duration-200">
+                            Start Conversation
+                        </a>
+                        <a href="resources.html" 
+                           class="inline-block px-8 py-4 border-2 border-white text-white rounded-lg font-semibold hover:bg-white hover:text-indigo-600 transition duration-200">
+                            View Resources
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features Section -->
+            <div class="py-20 bg-white">
+                <div class="container mx-auto px-6">
+                    <h2 class="text-3xl font-bold text-center mb-16">How MindfulAI Helps You</h2>
+                    <div class="grid md:grid-cols-3 gap-12">
+                        <!-- Feature 1 -->
+                        <div class="text-center">
+                            <div class="w-16 h-16 mx-auto mb-6 flex items-center justify-center bg-indigo-100 rounded-full">
+                                <i class="fas fa-brain text-2xl text-indigo-600"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-4">AI-Powered Conversations</h3>
+                            <p class="text-gray-600">
+                                Engage in meaningful dialogue with our advanced AI system trained to provide 
+                                empathetic and supportive responses.
+                            </p>
+                        </div>
+
+                        <!-- Feature 2 -->
+                        <div class="text-center">
+                            <div class="w-16 h-16 mx-auto mb-6 flex items-center justify-center bg-purple-100 rounded-full">
+                                <i class="fas fa-chart-pie text-2xl text-purple-600"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-4">Psychological Analysis</h3>
+                            <p class="text-gray-600">
+                                Receive detailed insights about your emotional patterns and cognitive behaviors 
+                                through advanced analytics.
+                            </p>
+                        </div>
+
+                        <!-- Feature 3 -->
+                        <div class="text-center">
+                            <div class="w-16 h-16 mx-auto mb-6 flex items-center justify-center bg-emerald-100 rounded-full">
+                                <i class="fas fa-clipboard-check text-2xl text-emerald-600"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-4">Personalized Treatment</h3>
+                            <p class="text-gray-600">
+                                Get customized treatment plans and recommendations based on your unique 
+                                needs and conversation history.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <footer class="bg-gray-800 text-white py-12">
+                <div class="container mx-auto px-6">
+                    <div class="grid md:grid-cols-4 gap-8">
+                        <div>
+                            <h4 class="text-lg font-semibold mb-4">MindfulAI</h4>
+                            <p class="text-gray-400">
+                                Providing AI-powered psychological support and analysis for better mental well-being.
+                            </p>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                            <ul class="space-y-2">
+                                <li><a href="chat.html" class="text-gray-400 hover:text-white">Chat</a></li>
+                                <li><a href="analytics.html" class="text-gray-400 hover:text-white">Analytics</a></li>
+                                <li><a href="treatment.html" class="text-gray-400 hover:text-white">Treatment</a></li>
+                                <li><a href="resources.html" class="text-gray-400 hover:text-white">Resources</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold mb-4">Support</h4>
+                            <ul class="space-y-2">
+                                <li><a href="#" class="text-gray-400 hover:text-white">Help Center</a></li>
+                                <li><a href="#" class="text-gray-400 hover:text-white">Privacy Policy</a></li>
+                                <li><a href="#" class="text-gray-400 hover:text-white">Terms of Service</a></li>
+                                <li><a href="#" class="text-gray-400 hover:text-white">Contact Us</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold mb-4">Connect</h4>
+                            <div class="flex space-x-4">
+                                <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                                <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook"></i></a>
+                                <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                                <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                        <p>&copy; 2024 MindfulAI. All rights reserved.</p>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Main JavaScript -->
+    <script>
+        const { createApp } = Vue
+
+        createApp({
+            data() {
+                return {
+                    sidebarOpen: false
+                }
+            },
+            methods: {
+                toggleSidebar() {
+                    this.sidebarOpen = !this.sidebarOpen
+                }
+            }
+        }).mount('#app')
+    </script>
+</body>
+</html>
