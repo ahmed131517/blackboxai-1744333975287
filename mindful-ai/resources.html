@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resources - MindfulAI</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Vue.js -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div id="app" class="min-h-screen">
+        <!-- Sidebar -->
+        <nav class="fixed top-0 left-0 h-full w-64 bg-white shadow-lg transform transition-transform duration-200 ease-in-out md:translate-x-0" 
+             :class="{'translate-x-0': sidebarOpen, '-translate-x-full': !sidebarOpen && !$screen.md}">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-8">
+                    <h1 class="text-2xl font-bold text-indigo-600">MindfulAI</h1>
+                    <button @click="toggleSidebar" class="md:hidden text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="space-y-4">
+                    <a href="index.html" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-100">
+                        <i class="fas fa-home mr-2"></i>Home
+                    </a>
+                    <a href="chat.html" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-100">
+                        <i class="fas fa-comments mr-2"></i>Chat
+                    </a>
+                    <a href="analytics.html" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-100">
+                        <i class="fas fa-chart-line mr-2"></i>Analytics
+                    </a>
+                    <a href="treatment.html" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-100">
+                        <i class="fas fa-clipboard-list mr-2"></i>Treatment
+                    </a>
+                    <a href="resources.html" class="block py-2.5 px-4 rounded transition duration-200 bg-indigo-50 text-indigo-600">
+                        <i class="fas fa-book-medical mr-2"></i>Resources
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="md:ml-64">
+            <!-- Mobile Header -->
+            <header class="md:hidden bg-white shadow-sm p-4">
+                <button @click="toggleSidebar" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </header>
+
+            <!-- Resources Dashboard -->
+            <div class="p-6">
+                <!-- Emergency Support Banner -->
+                <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-8 rounded-lg">
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-phone-alt text-red-500"></i>
+                        </div>
+                        <div class="ml-3">
+                            <h3 class="text-lg font-medium text-red-800">Need immediate help?</h3>
+                            <div class="mt-2 text-red-700">
+                                <p>If you're experiencing a mental health emergency, please call:</p>
+                                <p class="mt-1 font-semibold">National Crisis Hotline: 988</p>
+                                <p class="mt-1">Available 24/7 - Free and Confidential Support</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Search and Filter -->
+                <div class="mb-8">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                        <div class="flex-1">
+                            <div class="relative">
+                                <input type="text" 
+                                       v-model="searchQuery"
+                                       placeholder="Search resources..." 
+                                       class="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <select v-model="selectedCategory" 
+                                    class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                <option value="">All Categories</option>
+                                <option v-for="category in categories" :key="category" :value="category">
+                                    {{ category }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resources Grid -->
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Resource Cards -->
+                    <div v-for="resource in filteredResources" :key="resource.id"
+                         class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                        <div class="h-48 overflow-hidden">
+                            <img :src="resource.image" :alt="resource.title" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center mb-2">
+                                <span class="px-2 py-1 text-xs rounded-full" 
+                                      :class="resource.categoryColor">
+                                    {{ resource.category }}
+                                </span>
+                            </div>
+                            <h3 class="text-lg font-semibold mb-2">{{ resource.title }}</h3>
+                            <p class="text-gray-600 text-sm mb-4">{{ resource.description }}</p>
+                            <div class="flex items-center justify-between">
+                                <a :href="resource.link" 
+                                   class="text-indigo-600 hover:text-indigo-700 font-medium flex items-center">
+                                    <span>Learn More</span>
+                                    <i class="fas fa-arrow-right ml-2"></i>
+                                </a>
+                                <button @click="toggleFavorite(resource)"
+                                        class="text-gray-400 hover:text-yellow-500"
+                                        :class="{ 'text-yellow-500': resource.isFavorite }">
+                                    <i class="fas fa-star"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Support Groups Section -->
+                <div class="mt-12">
+                    <h2 class="text-2xl font-bold mb-6">Support Groups</h2>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div v-for="group in supportGroups" :key="group.id"
+                             class="bg-white rounded-lg shadow-lg p-6">
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 rounded-full flex items-center justify-center"
+                                     :class="group.iconBg">
+                                    <i :class="group.icon + ' text-xl ' + group.iconColor"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h3 class="text-lg font-semibold mb-2">{{ group.name }}</h3>
+                                    <p class="text-gray-600 text-sm mb-3">{{ group.description }}</p>
+                                    <div class="flex items-center text-sm text-gray-500 mb-4">
+                                        <i class="fas fa-calendar-alt mr-2"></i>
+                                        <span>{{ group.schedule }}</span>
+                                    </div>
+                                    <button class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition duration-200">
+                                        Join Group
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Resources -->
+                <div class="mt-12 grid md:grid-cols-3 gap-6">
+                    <!-- Books -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-lg font-semibold mb-4">Recommended Books</h3>
+                        <div class="space-y-4">
+                            <div v-for="book in recommendedBooks" :key="book.id"
+                                 class="flex items-start">
+                                <img :src="book.cover" :alt="book.title" class="w-16 h-20 object-cover rounded">
+                                <div class="ml-4">
+                                    <h4 class="font-medium">{{ book.title }}</h4>
+                                    <p class="text-sm text-gray-600">{{ book.author }}</p>
+                                    <div class="flex items-center mt-1">
+                                        <div class="flex text-yellow-400">
+                                            <i v-for="n in 5" :key="n" 
+                                               class="fas fa-star text-xs"
+                                               :class="n <= book.rating ? 'text-yellow-400' : 'text-gray-200'"></i>
+                                        </div>
+                                        <span class="text-xs text-gray-600 ml-2">{{ book.rating }}/5</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Apps -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-lg font-semibold mb-4">Helpful Apps</h3>
+                        <div class="space-y-4">
+                            <div v-for="app in helpfulApps" :key="app.id"
+                                 class="flex items-center p-3 rounded-lg border border-gray-200">
+                                <div class="w-12 h-12 rounded-lg bg-gray-100 flex items-center justify-center">
+                                    <i :class="app.icon + ' text-xl ' + app.iconColor"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="font-medium">{{ app.name }}</h4>
+                                    <p class="text-sm text-gray-600">{{ app.description }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Podcasts -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-lg font-semibold mb-4">Mental Health Podcasts</h3>
+                        <div class="space-y-4">
+                            <div v-for="podcast in podcasts" :key="podcast.id"
+                                 class="flex items-center p-3 rounded-lg border border-gray-200">
+                                <div class="w-12 h-12 rounded-full overflow-hidden">
+                                    <img :src="podcast.image" :alt="podcast.name" class="w-full h-full object-cover">
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="font-medium">{{ podcast.name }}</h4>
+                                    <p class="text-sm text-gray-600">{{ podcast.host }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main JavaScript -->
+    <script>
+        const { createApp } = Vue
+
+        createApp({
+            data() {
+                return {
+                    sidebarOpen: false,
+                    searchQuery: '',
+                    selectedCategory: '',
+                    categories: ['Self-Help', 'Crisis Support', 'Meditation', 'Therapy', 'Wellness'],
+                    resources: [
+                        {
+                            id: 1,
+                            title: 'Meditation Basics',
+                            description: 'Learn fundamental meditation techniques for daily practice',
+                            category: 'Meditation',
+                            categoryColor: 'bg-purple-100 text-purple-700',
+                            image: 'https://images.pexels.com/photos/3822622/pexels-photo-3822622.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+                            link: '#',
+                            isFavorite: false
+                        },
+                        {
+                            id: 2,
+                            title: 'Anxiety Management',
+                            description: 'Practical strategies for managing anxiety and panic attacks',
+                            category: 'Self-Help',
+                            categoryColor: 'bg-blue-100 text-blue-700',
+                            image: 'https://images.pexels.com/photos/3807755/pexels-photo-3807755.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+                            link: '#',
+                            isFavorite: true
+                        },
+                        {
+                            id: 3,
+                            title: 'Crisis Support Guide',
+                            description: 'Immediate steps and resources for mental health crises',
+                            category: 'Crisis Support',
+                            categoryColor: 'bg-red-100 text-red-700',
+                            image: 'https://images.pexels.com/photos/4101143/pexels-photo-4101143.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+                            link: '#',
+                            isFavorite: false
+                        }
+                    ],
+                    supportGroups: [
+                        {
+                            id: 1,
+                            name: 'Anxiety Support Circle',
+                            description: 'Weekly group sessions for anxiety management and mutual support',
+                            schedule: 'Every Tuesday at 7:00 PM',
+                            icon: 'fas fa-users',
+                            iconBg: 'bg-blue-100',
+                            iconColor: 'text-blue-600'
+                        },
+                        {
+                            id: 2,
+                            name: 'Mindfulness Meditation',
+                            description: 'Guided meditation sessions for stress relief and mental clarity',
+                            schedule: 'Every Thursday at 6:00 PM',
+                            icon: 'fas fa-om',
+                            iconBg: 'bg-purple-100',
+                            iconColor: 'text-purple-600'
+                        }
+                    ],
+                    recommendedBooks: [
+                        {
+                            id: 1,
+                            title: 'The Mindful Way',
+                            author: 'Dr. Sarah Johnson',
+                            cover: 'https://images.pexels.com/photos/5834/nature-grass-leaf-green.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+                            rating: 4.5
+                        },
+                        {
+                            id: 2,
+                            title: 'Emotional Intelligence',
+                            author: 'Daniel Goleman',
+                            cover: 'https://images.pexels.com/photos/5834/nature-grass-leaf-green.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+                            rating: 4.8
+                        }
+                    ],
+                    helpfulApps: [
+                        {
+                            id: 1,
+                            name: 'Calm Mind',
+                            description: 'Meditation and sleep stories',
+                            icon: 'fas fa-moon',
+                            iconColor: 'text-indigo-600'
+                        },
+                        {
+                            id: 2,
+                            name: 'Mood Tracker',
+                            description: 'Daily mood and habit tracking',
+                            icon: 'fas fa-chart-line',
+                            iconColor: 'text-green-600'
+                        }
+                    ],
+                    podcasts: [
+                        {
+                            id: 1,
+                            name: 'Mental Wellness Today',
+                            host: 'Dr. Michael Brown',
+                            image: 'https://images.pexels.com/photos/3822622/pexels-photo-3822622.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
+                        },
+                        {
+                            id: 2,
+                            name: 'Mindful Conversations',
+                            host: 'Emma Wilson',
+                            image: 'https://images.pexels.com/photos/3822622/pexels-photo-3822622.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
+                        }
+                    ]
+                }
+            },
+            computed: {
+                filteredResources() {
+                    return this.resources.filter(resource => {
+                        const matchesSearch = resource.title.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+                                            resource.description.toLowerCase().includes(this.searchQuery.toLowerCase())
+                        const matchesCategory = !this.selectedCategory || resource.category === this.selectedCategory
+                        return matchesSearch && matchesCategory
+                    })
+                }
+            },
+            methods: {
+                toggleSidebar() {
+                    this.sidebarOpen = !this.sidebarOpen
+                },
+                toggleFavorite(resource) {
+                    resource.isFavorite = !resource.isFavorite
+                }
+            }
+        }).mount('#app')
+    </script>
+</body>
+</html>
